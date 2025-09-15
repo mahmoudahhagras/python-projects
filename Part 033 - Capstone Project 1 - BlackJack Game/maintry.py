@@ -10,8 +10,9 @@ def calcu(move_user , cards, user_cards, console_cards, con):
     user_score = sum(user_cards)
     if user_score > 21:
         if 11 in user_cards and user_score > 21:
-            user_cards[user_cards.index(11)] = 1
-            user_score = sum(user_cards)
+            while 11 in user_cards and user_score > 21:
+                user_cards[user_cards.index(11)] = 1
+                user_score = sum(user_cards)
         else:
             print(f"User Loses Your score is {sum(user_cards)}\nand Console score = {sum(console_cards)}")
     elif user_score == 21:
@@ -35,20 +36,28 @@ def deal_cards(move_user , cards, user_cards, console_cards, con):
                 user_cards.append(random.choice(cards))
                 print(f"Your cards are {user_cards}")
                 user_score = sum(user_cards)
+                calcu(move_user , cards, user_cards, console_cards, con)
+                # End game if user busts or wins
+                if sum(user_cards) >= 21:
+                    break
             elif move_user.lower() == "stand":
                 print(f"Your cards are {user_cards}")
                 user_score = sum(user_cards)
                 calcu(move_user , cards, user_cards, console_cards, con)
                 break
+                break
             if console_score >= 18:
                 print(f"the console has chosen to stand")
-                console_score = sum(console_cards)
             elif console_score < 18:
-                console_cards.append( random.choice(cards))
+            elif console_score < 18:
+                console_cards.append(random.choice(cards))
                 console_score = sum(console_cards)
-                print(f"the console has made it's move")
+                calcu(move_user , cards, user_cards, console_cards, con)
+                # End game if dealer busts or wins
+                if console_score >= 21:
+                    break
+    deal_cards(move_user , cards, user_cards, console_cards, con)
 start = input("Type 'start' to start\n")
 if start == "start":
     deal_cards(move_user , cards, user_cards, console_cards, con)
     calcu(move_user , cards, user_cards, console_cards, con)
-#will ad the loop against the user to play again
