@@ -51,4 +51,3 @@ start = input("Type 'start' to start\n")
 if start == "start":
     deal_cards(move_user , cards, user_cards, console_cards, con)
     calcu(move_user , cards, user_cards, console_cards, con)
-#will ad the loop against the user to play again
